@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc mừng sinh nhật Ái Đình! 🎉</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff69b4; /* Màu hồng */
+            --secondary-color: #ffd700; /* Màu vàng */
+            --background-gradient: linear-gradient(135deg, #fce4ec, #ffe4b5, #e6e6fa);
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: var(--background-gradient);
+            background-size: 300% 300%;
+            animation: gradientShift 15s ease infinite;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* Thông báo mật khẩu sai */
+        #error-message {
+            position: absolute;
+            top: 20%;
+            width: 100%;
+            text-align: center;
+            font-size: 1.3em;
+            color: #ff4444;
+            text-shadow: 1px 1px 2px #000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        #error-message.visible {
+            opacity: 1;
+        }
+        /* Bong bóng nổi lên */
+        .bubbles {
+            position: absolute;
+            bottom: -150px;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            background-color: rgba(255, 192, 203, 0.5); /* Màu hồng pastel mặc định */
+            animation: rise 10s infinite ease-in;
+        }
+        @keyframes rise {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        }
+        /* Logo nhân vật */
+        .logo-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+        .logo {
+            width: 100px; height: 100px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transform: scale(0);
+        }
+        .logo-chikawa { background-image: url('chikawa.png'); margin-left: 20px; }
+        .logo-usagi   { background-image: url('usagi.png'); }
+        .logo-hachiware { background-image: url('hachiware.png'); margin-right: 20px; }
+        .logo.show-logo {
+            opacity: 1;
+            transform: scale(1);
+            animation: float 4s ease-in-out infinite alternate;
+        }
+        @keyframes float {
+            0%   { transform: translateY(0) scale(1); }
+            50%  { transform: translateY(-20px) scale(1.1); }
+            100% { transform: translateY(0) scale(1); }
+        }
+        /* Thẻ chứa chính */
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            z-index: 3;
+            transition: box-shadow 0.8s ease-in-out;
+        }
+        .container.unlocked {
+            animation: jiggle 1s ease-out;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes jiggle {
+            0%   { transform: scale(1) rotate(0); }
+            25%  { transform: scale(1.05) rotate(5deg); }
+            50%  { transform: scale(0.95) rotate(-5deg); }
+            75%  { transform: scale(1.1) rotate(2deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: bounceIn 1s ease-out;
+        }
+        @keyframes bounceIn {
+            0%   { transform: scale(0.3); opacity: 0; }
+            50%  { transform: scale(1.1); opacity: 1; }
+            70%  { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        .input-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="password"] {
+            padding: 12px 15px;
+            font-size: 1em;
+            border-radius: 50px;
+            border: 2px solid var(--primary-color);
+            outline: none;
+            transition: all 0.3s ease;
+            width: 200px;
+        }
+        input[type="password"]:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 1em;
+            background-image: linear-gradient(45deg, var(--primary-color), #ff1493);
+            border: none;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        #message {
+            opacity: 0;
+            transform: scale(0.8) translateY(30px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            border: 3px dashed var(--primary-color);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        #message.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        .message-content {
+            white-space: pre-line;
+            text-align: left;
+            line-height: 1.6;
+        }
+        .message-content strong {
+            color: var(--primary-color);
+            font-size: 1.3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .signature {
+            text-align: right;
+            margin-top: 20px;
+            font-style: italic;
+            font-weight: bold;
+            color: #666;
+            font-family: 'Pacifico', cursive;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        .signature.visible {
+            opacity: 1;
+        }
+        .confetti-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Thông báo mật khẩu sai -->
+    <div id="error-message">Sai mật khẩu rồi nha 😜</div>
+
+    <!-- Logo nhân vật hai bên -->
+    <div class="logo-container">
+        <div class="logo logo-chikawa" id="logo-chikawa"></div>
+        <div class="logo logo-usagi"   id="logo-usagi"></div>
+        <div class="logo logo-hachiware" id="logo-hachiware"></div>
+    </div>
+
+    <!-- Bong bóng -->
+    <div class="bubbles" id="bubble-container"></div>
+
+    <!-- Thẻ chứa nội dung -->
+    <div class="container">
+        <h1>🔒 Nhập mật khẩu để xem điều bí mật!</h1>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Nhập mật khẩu">
+            <button onclick="checkPassword()">Mở hộp quà 🎁</button>
+        </div>
+        <div id="message">
+            <div class="message-content">
+                <strong id="message-title">🎉 Chúc mừng sinh nhật Ái Đình! 🎂</strong>
+                <div id="message-body"></div>
+                <div class="signature">Fen guột<br>Ngọc Thèng</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pháo giấy -->
+    <div class="confetti-container" id="confetti-container"></div>
+    <!-- Nhạc nền (vòng lặp) -->
+    <audio id="birthdaySong" src="bangbangbang_intro.mp3" loop></audio>
+
+    <script>
+        function checkPassword() {
+            const input = document.getElementById("password").value;
+            const container = document.querySelector(".container");
+            const message = document.getElementById("message");
+            const errorMsg = document.getElementById("error-message");
+            if (input === "27092007") {
+                // Mật khẩu đúng: mở ra niềm vui
+                errorMsg.classList.remove("visible");
+                container.classList.add("unlocked");
+                message.classList.add("visible");
+                startBubbles();
+                setTimeout(startConfetti, 500);  // Giật lag nhỏ trước khi confetti
+                setTimeout(showLogos, 300);
+                document.getElementById("birthdaySong").play();
+                typeWriter();
+            } else {
+                // Mật khẩu sai: hiển thị thông báo lỗi
+                errorMsg.classList.add("visible");
+                setTimeout(() => errorMsg.classList.remove("visible"), 3000);
+            }
+        }
+
+        function startConfetti() {
+            const confettiContainer = document.getElementById('confetti-container');
+            const colors = ['#ff69b4', '#ffd700', '#00ced1', '#ff4500', '#9932cc'];
+            const numberOfConfetti = 120;
+            for (let i = 0; i < numberOfConfetti; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = Math.random() * -100 + 'vh';
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                confetti.style.animationDuration = 3 + Math.random() * 5 + 's';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confettiContainer.appendChild(confetti);
+            }
+        }
+
+        function startBubbles() {
+            const bubbleContainer = document.getElementById('bubble-container');
+            const colors = ['rgba(255, 192, 203, 0.5)', 'rgba(173,216,230,0.5)', 'rgba(144,238,144,0.5)'];
+            const numberOfBubbles = 30;
+            for (let i = 0; i < numberOfBubbles; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                bubble.style.left = Math.random() * 100 + '%';
+                let size = Math.random() * 50 + 20;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                bubbleContainer.appendChild(bubble);
+            }
+        }
+
+        function showLogos() {
+            setTimeout(() => document.getElementById('logo-chikawa').classList.add('show-logo'), 0);
+            setTimeout(() => document.getElementById('logo-usagi') .classList.add('show-logo'), 300);
+            setTimeout(() => document.getElementById('logo-hachiware').classList.add('show-logo'), 600);
+        }
+
+        function typeWriter() {
+            const bodyText = `Chúc mừng Đìn đã bước vào tuổi 18 nha, vào ngày sinh nhật tui chúc Đìn luôn vui vẻ càng ngày càng xinh đẹp nha.
+Vậy là Đìn đã bước vào độ tuổi làm một người trưởng thành và bắt đầu một khởi đầu mới. Dù mới chơi chung được gần 3 năm, nhưng những năm này tui rất vui và rất quý Đìn. Đôi khi có thể có một chút cãi vã nhưng rồi lại hoà. Đìn cũng giúp đỡ tui rất nhiều trong các phương diện trong cuộc sống của tui và cảm ơn Đìn rất nhiều.
+Một lần nữa chúc cho Đìn có một sinh nhật thật hạnh phúc bên gia đình cùng những người bạn mà Đìn yêu quý nhaaa!!`;
+            const messageBody = document.getElementById("message-body");
+            let i = 0;
+            function type() {
+                if (i < bodyText.length) {
+                    messageBody.innerHTML += bodyText.charAt(i);
+                    i++;
+                    setTimeout(type, 50);
+                } else {
+                    // Sau khi gõ xong, hiển thị chữ ký
+                    document.querySelector('.signature').classList.add('visible');
+                }
+            }
+            type();
+        }
+    </script>
+</body>
+</html>
